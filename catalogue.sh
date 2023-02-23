@@ -16,7 +16,7 @@ print_head "Delete Old Content"
 rm -rf /app/* &>>${log_file}
 
 print_head "Downloading Application Content"
-curl -L -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip
+curl -L -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip &>>${log_file}
 cd /app &>>${log_file}
 
 print_head "Extracting Application Content"
