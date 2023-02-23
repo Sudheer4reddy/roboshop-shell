@@ -13,7 +13,6 @@ id roboshop &>>${log_file}
 if [ $? -ne 0 ]; then
   useradd roboshop &>>${log_file}
 fi
-useradd roboshop &>>${log_file}
 status_check $?
 
 print_head "Create Application Directory"
