@@ -23,7 +23,7 @@ print_head "Extracting Application Content"
 unzip /tmp/catalogue.zip &>>${log_file}
 
 print_head "Installing NodeJS Dependencies "
-npm install &>>${log_file}
+npm install &>>${log_file} &>>${log_file}
 
 print_head "Copy SystemD Service File"
 cp Configs/catalogue.service /etc/systemd/system/catalogue.service &>>${log_file}
