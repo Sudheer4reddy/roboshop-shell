@@ -5,21 +5,21 @@ if [ -z "${1}" ]; then
   exit 1
 fi
 print_head "Disabling MySQL 8 Version"
-dnf module disable mysql -y
+dnf module disable mysql -y &>>${log_file}
 status_check $?
 
 print_head "Installing MySQL Server"
-yum install mysql-community-server -y
+yum install mysql-community-server -y &>>${log_file}
 status_check $?
 
 print_head "Enable MySQL Service"
-systemctl enable mysqld
+systemctl enable mysqld &>>${log_file}
 status_check $?
 
 print_head "Start MySQL Service"
-systemctl start mysqld
+systemctl start mysqld &>>${log_file}
 status_check $?
 
 print_head "Set Root Password"
-mysql_secure_installation --set-root-pass RoboShop@1
+mysql_secure_installation --set-root-pass RoboShop@1 &>>${log_file}
 status_check $?
