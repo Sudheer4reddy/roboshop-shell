@@ -15,7 +15,21 @@ status_check() {
     exit 1
   fi
 }
+schema_setup() {
+  if [ "${schema_type}" == "mongo" ]; then
+  print_head "Copy MongoDB Repo File"
+    cp ${code_dir}/Configs/mongodb.repo /etc/yum.repos.d/mongodb.repo &>>${log_file}
+    status_check $?
 
+    print_head "Install MongoDB Client"
+    yum install mongodb-org-shell -y &>>${log_file}
+    status_check $?
+
+    print_head "Load Schema"
+    mongo --host mongodb.roboshop.internal </app/schema/${component}.js &>>${log_file}
+    status_check $?
+  fi
+}
 NODEJS(){
   print_head "Configure NodeJS Repo"
   curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log_file}
@@ -71,16 +85,6 @@ NODEJS(){
   systemctl start ${component} &>>${log_file}
   status_check $?
 
-  print_head "Copy MongoDB Repo File"
-  cp ${code_dir}/Configs/mongodb.repo /etc/yum.repos.d/mongodb.repo &>>${log_file}
-  status_check $?
 
-  print_head "Install MongoDB Client"
-  yum install mongodb-org-shell -y &>>${log_file}
-  status_check $?
-
-  print_head "Load Schema"
-  mongo --host mongodb.roboshop.internal </app/schema/${component}.js &>>${log_file}
-  status_check $?
 
 }
