@@ -1,9 +1,11 @@
 source common.sh
 
+mysql_root_password=$1
 if [ -z "${1}" ]; then
   echo "Missing MySQL Root Password argument"
   exit 1
 fi
+
 print_head "Disabling MySQL 8 Version"
 dnf module disable mysql -y &>>${log_file}
 status_check $?
